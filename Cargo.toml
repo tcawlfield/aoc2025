@@ -1,0 +1,12 @@
+[package]
+name = "aoc2025"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+anyhow = "1.0.100"
+bstr = "1.12.1"
+gen-combinations = "0.1.0"
+ilog = "1.0.1"
+prime_factorization = "1.0.5"
+regex = "1.12.2"
