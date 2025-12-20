@@ -31,11 +31,39 @@ def get_instructions(input: typing.TextIO) -> list[int]:
         if line[0] == "R":
             turns.append(int(line[1:]))
         elif line[0] == "L":
-            turns.append(int(line[1:]))
+            turns.append(-int(line[1:]))
         else:
             complaint = f"Bad line: {line}"
             raise ValueError(complaint)
     return turns
+
+
+class Dial_pt2(Dial):
+    def rotate(self, twist: int):
+        if self.n * (self.n + twist) < 0:
+            # Crossed zero
+            self.zeros += 1
+        self.n += twist
+        # Add full laps
+        self.zeros += (abs(self.n)) // DIAL_SIZE
+        if twist != 0 and self.n == 0:
+            self.zeros += 1
+        self.n = self.n % DIAL_SIZE
+
+
+### Main
+
+if __name__ == "__main__":
+    input_file = get_input("input_d1.txt")
+    d = Dial()
+    with input_file.open() as fin:
+        turns = get_instructions(fin)
+    zeros = d.do_all(turns)
+    print(f"Day 1 part 1: {zeros}")
+
+    d2 = Dial_pt2()
+    zeros2 = d2.do_all(turns)
+    print(f"Day 1 part 2: {zeros2}")
 
 
 ###### TESTS
@@ -63,12 +91,11 @@ def test_day1_pt1():
     assert zeros == 3
 
 
-### Main
+def test_day1_pt2():
+    import io
 
-if __name__ == "__main__":
-    input_file = get_input("input_d1.txt")
-    d = Dial()
-    with input_file.open() as fin:
-        turns = get_instructions(fin)
+    input_file = io.StringIO(_TEST_INPUT)
+    turns = get_instructions(input_file)
+    d = Dial_pt2()
     zeros = d.do_all(turns)
-    print(f"Day 1 part 1: {zeros}")
+    assert zeros == 8

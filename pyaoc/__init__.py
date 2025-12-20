@@ -1,7 +1,5 @@
 from pathlib import Path
 
-import day1
-
 
 def get_input(filename: str) -> Path:
     return Path("__file__").parent / "input" / filename
