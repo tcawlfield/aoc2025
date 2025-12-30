@@ -4,6 +4,19 @@ use std::fs::File;
 use std::io::BufReader;
 use std::io::prelude::*;
 
+fn main() {
+    let input1 = get_input("input_d1.txt");
+    let mut d = Dial::new();
+    let mut instructions = File::open(&input1).unwrap();
+    let turns = get_instructions(&mut instructions);
+    let zeros = d.do_all(&turns);
+    println!("Day 1 part 1: {}", zeros);
+
+    let mut d2 = DialPt2::new();
+    let zeros2 = d2.do_all(&turns);
+    println!("Day 1 part 2: {}", zeros2);
+}
+
 struct Dial {
     n: i64,
     zeros: u32,
@@ -85,19 +98,6 @@ fn get_instructions<R: Read>(rdr: &mut R) -> Vec<i64> {
         turns.push(turn);
     }
     turns
-}
-
-fn main() {
-    let input1 = get_input("input_d1.txt");
-    let mut d = Dial::new();
-    let mut instructions = File::open(&input1).unwrap();
-    let turns = get_instructions(&mut instructions);
-    let zeros = d.do_all(&turns);
-    println!("Day 1 part 1: {}", zeros);
-
-    let mut d2 = DialPt2::new();
-    let zeros2 = d2.do_all(&turns);
-    println!("Day 1 part 2: {}", zeros2);
 }
 
 #[cfg(test)]
