@@ -49,7 +49,7 @@ fn next_invalid_id(val: u64) -> u64 {
     let digits = num_digits_of(val);
     if digits % 2 == 1 {
         // Odd number
-        let next_bigger_left_dig = (digits + 1) / 2;
+        let next_bigger_left_dig = digits.div_ceil(2);
         let pattern = 10u64.pow(next_bigger_left_dig - 1);
         return 10u64.pow(next_bigger_left_dig * 2 - 1) + pattern;
     }
