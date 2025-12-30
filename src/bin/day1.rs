@@ -77,7 +77,7 @@ impl HasDial for DialPt2 {
             // Landed at zero
             self.zeros += 1;
         }
-        self.n = self.n % DIAL_SIZE;
+        self.n %= DIAL_SIZE;
     }
 
     fn get_zeros(&self) -> u32 {
@@ -92,7 +92,7 @@ fn get_instructions<R: Read>(rdr: &mut R) -> Vec<i64> {
         let line = line.unwrap();
         let turn = match &line[0..1] {
             b"R" => str::parse(str::from_utf8(&line[1..]).unwrap()).unwrap(),
-            b"L" => -1 * str::parse::<i64>(str::from_utf8(&line[1..]).unwrap()).unwrap(),
+            b"L" => -str::parse::<i64>(str::from_utf8(&line[1..]).unwrap()).unwrap(),
             _ => panic!("Bad input line"),
         };
         turns.push(turn);
